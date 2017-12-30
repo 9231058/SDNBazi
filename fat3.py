@@ -17,23 +17,23 @@ from mininet.node import OVSSwitch
 from mininet.topo import Topo
 from mininet.link import TCLink
 
-class SampleTopology(Topo):
+class SampleTopo(Topo):
     """
     Subclass of mininet Topo class for
-    creating fat-3 topology. 
+    creating fat-tree topology.
     """
-    def build(self, *args, **params):
-        core1 = self.addSwitch(name='core1',dpid="0000000000000201")
-        core2 = self.addSwitch(name='core2',dpid="0000000000000202")
-        agg1 = self.addSwitch(name='agg1',dpid="0000000000000203")
-        agg2 = self.addSwitch(name='agg2',dpid="0000000000000204")
-        edge1 = self.addSwitch(name='edge1',dpid="0000000000000205")
-        edge2 = self.addSwitch(name='edge2',dpid="0000000000000206")
-        edge3 = self.addSwitch(name='edge3',dpid="0000000000000207")
-        edge4 = self.addSwitch(name='edge4',dpid="0000000000000208")
+    def build(self, *args, **kwargs):
+        core1 = self.addSwitch(name='s1')
+        core2 = self.addSwitch(name='s2')
+        agg1 = self.addSwitch(name='s3')
+        agg2 = self.addSwitch(name='s4')
+        edge1 = self.addSwitch(name='s5')
+        edge2 = self.addSwitch(name='s6')
+        edge3 = self.addSwitch(name='s7')
+        edge4 = self.addSwitch(name='s8')
 
         host1 = self.addHost(name='h1')
-       	host2 = self.addHost(name='h2')
+        host2 = self.addHost(name='h2')
         host3 = self.addHost(name='h3')
         host4 = self.addHost(name='h4')
         host5 = self.addHost(name='h5')
@@ -62,8 +62,8 @@ class SampleTopology(Topo):
 if __name__ == '__main__':
     PARSER = argparse.ArgumentParser()
     PARSER.add_argument('ips', metavar='ip',
-                        help='POX Network Controllers IP Addresses',
-                        default=['127.0.0.1'], type=str, nargs='*')
+            help='POX Network Controllers IP Addresses',
+            default=['127.0.0.1'], type=str, nargs='*')
     CLI_ARGS = PARSER.parse_args()
 
     setLogLevel('info')
@@ -71,10 +71,9 @@ if __name__ == '__main__':
     RCS = []
     for ip in CLI_ARGS.ips:
         RCS.append(RemoteController('POX-%s' % ip, ip=ip, port=6633))
-    NET = Mininet(topo=SampleTopology(), build=False)
+    NET = Mininet(topo=SampleTopo(), link=TCLink)
     for rc in RCS:
         NET.addController(rc)
-    NET.build()
     NET.start()
     CLI(NET)
     NET.stop()
