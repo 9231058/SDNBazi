@@ -71,7 +71,7 @@ if __name__ == '__main__':
     RCS = []
     for ip in CLI_ARGS.ips:
         RCS.append(RemoteController('POX-%s' % ip, ip=ip, port=6633))
-    NET = Mininet(topo=SampleTopo(), link=TCLink)
+    NET = Mininet(topo=SampleTopo(), link=TCLink, autoSetMacs=True)
     for rc in RCS:
         NET.addController(rc)
     NET.start()
