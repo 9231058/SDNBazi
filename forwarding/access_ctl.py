@@ -24,10 +24,14 @@ class AccessControl(object):
 
     def _handle_PacketIn(self, event):
         packet = event.parsed
-        if str(packet.src) == "00:00:00:00:00:01" and str(packet.dst) in hosts:
-            log.info("Packet form the source is here")
-            log.info("The winner is %s" % packet.dst)
-            allowed_hosts.append(packet.dst)
+
+        # We want hosts
+        if str(packet.src) in hosts and str(packet.dst) in hosts:
+            if str(packet.src) == "00:00:00:00:00:01" and str(packet.dst) not in allowed_hosts:
+                log.info("The winner is %s" % packet.dst)
+                allowed_hosts.append(str(packet.dst))
+            if str(packet.src) != "00:00:00:00:00:01" and str(packet.src) not in allowed_hosts:
+                log.info("Let catch this packet %s -> %s" % (packet.src, packet.dst))
 
 
 class access_ctl(object):
