@@ -7,15 +7,14 @@ Usage (example uses IP = 192.168.1.2):
         sudo python mn.py --ip 192.168.1.2
 """
 import argparse
-from functools import partial
 
 from mininet.net import Mininet
 from mininet.net import CLI
 from mininet.log import setLogLevel
 from mininet.node import RemoteController
-from mininet.node import OVSSwitch
 from mininet.topo import Topo
 from mininet.link import TCLink
+
 
 class SampleTopo(Topo):
     """
