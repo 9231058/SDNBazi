@@ -8,7 +8,6 @@ validator = "00:00:00:00:00:01"
 allowed_hosts = ["00:00:00:00:00:01"]
 
 class AccessControl(object):
-    connection  = ""    
     def __init__(self, connection, transparent):
         # We want to hear PacketIn messages, so we listen
         # to the connection
@@ -35,7 +34,7 @@ class AccessControl(object):
                        msg.hard_timeout = 94
                        msg.priority = 1000
                        self.connection.send(msg)
-                        
+
 class access_ctl(object):
     """
     Waits for OpenFlow switches to connect and makes them Fekri's switches.
